@@ -7,9 +7,11 @@ export const getPosts = async ({page = 1, order = 'asc', limit = 10, orderby = '
 
         const queryString = `${SERVER_URL}/posts?_page=${page}&_limit=${limit}&_order=${order}&_sort=${orderby}`;
         const response = await axios.get(queryString);
+        const newPosts = response.data;
         return {
-            posts: prevPosts ? [...prevPosts, ...response.data] : response.data, // array of objects
-            page
+            posts: prevPosts ? [...prevPosts, ...newPosts] : newPosts,
+            page,
+            morePosts: (newPosts.length < limit) ? false : true
         }
 
     } catch (error) {
