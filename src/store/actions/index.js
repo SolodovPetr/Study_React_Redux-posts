@@ -4,7 +4,7 @@ import {
 } from '../types';
 
 
-export const getPosts = () => ({
+export const getPosts = (params, prevPosts) => ({
     type: GET_POSTS,
-    payload: api.getPosts()
-})
+    payload: api.getPosts(params, prevPosts)
+});
