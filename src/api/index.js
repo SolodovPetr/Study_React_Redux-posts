@@ -3,6 +3,7 @@ import { stringifyUrl } from 'query-string';
 
 const SERVER_URL = 'http://localhost:3004';
 
+// Posts:
 export const getPosts = async ({page = 1, order = 'asc', limit = 10, orderby = 'id'}, prevPosts = false) => {
     try {
         const getUrl = stringifyUrl({
@@ -24,6 +25,31 @@ export const getPosts = async ({page = 1, order = 'asc', limit = 10, orderby = '
 
     } catch (error) {
         console.log('No posts, got error - ');
+        throw error;
+    }
+}
+
+// Users:
+export const addNewsletter = async email => {
+    try {
+        const getUrl = stringifyUrl({
+            url: `${SERVER_URL}/newsletter`,
+            query: { email }
+        });
+        const getUser = await axios.get(getUrl);
+
+        if ( Array.isArray(getUser.data) && getUser.data.length > 0 ) {
+            // email already exists - deny adding
+            return { newsletter: 'failed' }
+        } else {
+            // add email to db
+            await axios.post(`${SERVER_URL}/newsletter`, { email });
+            return {
+                newsletter: 'added',
+                email
+            }
+        }
+    } catch (error) {
         throw error;
     }
 }
