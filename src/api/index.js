@@ -1,12 +1,20 @@
 import axios from 'axios';
+import { stringifyUrl } from 'query-string';
 
 const SERVER_URL = 'http://localhost:3004';
 
 export const getPosts = async ({page = 1, order = 'asc', limit = 10, orderby = 'id'}, prevPosts = false) => {
     try {
-
-        const queryString = `${SERVER_URL}/posts?_page=${page}&_limit=${limit}&_order=${order}&_sort=${orderby}`;
-        const response = await axios.get(queryString);
+        const getUrl = stringifyUrl({
+            url: `${SERVER_URL}/posts`,
+            query: {
+                _page: page,
+                _oder: order,
+                _limit: limit,
+                _sort: orderby
+            }
+        });
+        const response = await axios.get(getUrl);
         const newPosts = response.data;
         return {
             posts: prevPosts ? [...prevPosts, ...newPosts] : newPosts,
