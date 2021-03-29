@@ -1,6 +1,7 @@
 import {
     GET_POST,
-    GET_POSTS
+    GET_POSTS,
+    CLEAR_POST
 } from '../types';
 
 export default function postsReducer(state = {}, action) {
@@ -15,6 +16,12 @@ export default function postsReducer(state = {}, action) {
             return {
                 ...state,
                 singlePost: action.payload
+            }
+
+        case CLEAR_POST:
+            return {
+                ...state,
+                singlePost: null
             }
 
         default:
