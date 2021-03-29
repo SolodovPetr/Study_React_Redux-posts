@@ -1,5 +1,6 @@
 import * as api from '../../api';
 import {
+    GET_POST,
     GET_POSTS,
     ADD_NEWSLETTER,
     CLEAR_NEWSLETTER
@@ -9,6 +10,11 @@ import {
 export const getPosts = (params, prevPosts) => ({
     type: GET_POSTS,
     payload: api.getPosts(params, prevPosts)
+});
+
+export const getPost = id => ({
+    type: GET_POST,
+    payload: api.getPost(id)
 });
 
 

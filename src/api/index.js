@@ -29,6 +29,19 @@ export const getPosts = async ({page = 1, order = 'asc', limit = 10, orderby = '
     }
 }
 
+export const getPost = async id => {
+    try {
+        const getUrl = `${SERVER_URL}/posts/${ id }`;
+        const response = await axios.get(getUrl);
+        return response.data;
+
+    } catch (error) {
+        console.error('Get post:', error);
+        return '404';
+    }
+}
+
+
 // Users:
 export const addNewsletter = async email => {
     try {
