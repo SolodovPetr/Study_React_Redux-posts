@@ -32,7 +32,6 @@ const Contact = () => {
                 .max(500,'Sorry the message is too long')
         }),
         onSubmit: ( values, {resetForm} ) => {
-            console.log(values)
             dispatch( sendMessage(values) )
                 .then( ({ payload }) => {
                     if ( payload ) {
@@ -47,11 +46,16 @@ const Contact = () => {
 
     const { errors, touched, handleSubmit } = formik;
 
+    const showFieldError = name => {
+        if ( errors[name] && touched[name] ) {
+            return (<Alert variant="danger">{errors[name]}</Alert>);
+        }
+    }
+
     return (
         <>
             <h1>Contact us</h1>
             <form onSubmit={ handleSubmit }>
-
                 <div className="form-group">
                     <label htmlFor="email">Email address</label>
                     <input
@@ -60,12 +64,8 @@ const Contact = () => {
                         placeholder="email@example.com"
                         {...formik.getFieldProps('email')}
                     />
-                    {
-                        errors.email && touched.email &&
-                        ( <Alert variant="danger">{errors.email}</Alert> )
-                    }
+                    { showFieldError('email') }
                 </div>
-
                 <div className="form-group">
                     <label htmlFor="firstname">First name</label>
                     <input
@@ -74,12 +74,8 @@ const Contact = () => {
                         placeholder="Enter your name"
                         {...formik.getFieldProps('firstname')}
                     />
-                    {
-                        errors.firstname && touched.firstname &&
-                        ( <Alert variant="danger">{errors.firstname}</Alert> )
-                    }
+                    { showFieldError('firstname') }
                 </div>
-
                 <div className="form-group">
                     <label htmlFor="lastname">Last name</label>
                     <input
@@ -88,12 +84,8 @@ const Contact = () => {
                         placeholder="Enter your last name"
                         {...formik.getFieldProps('lastname')}
                     />
-                    {
-                        errors.lastname && touched.lastname &&
-                        ( <Alert variant="danger">{errors.lastname}</Alert> )
-                    }
+                    { showFieldError('lastname') }
                 </div>
-
                 <div className="form-group">
                     <label htmlFor="message">Message</label>
                     <textarea
@@ -101,19 +93,13 @@ const Contact = () => {
                         rows="3"
                         {...formik.getFieldProps('message')}
                     ></textarea>
-                    {
-                        errors.message && touched.message &&
-                        ( <Alert variant="danger">{errors.message}</Alert> )
-                    }
+                    { showFieldError('message') }
                 </div>
-
                 <button type="submit" className="btn btn-primary mb-2">
                     Send message
                 </button>
-
             </form>
         </>
-
     );
 }
 
