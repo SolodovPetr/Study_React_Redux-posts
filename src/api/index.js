@@ -66,3 +66,13 @@ export const addNewsletter = async email => {
         throw error;
     }
 }
+
+export const sendMessage = async data => {
+    try {
+        return !!( await axios.post(`${SERVER_URL}/contact`, data) );
+
+    } catch (error) {
+        console.error('Save message:', error);
+        return false;
+    }
+}

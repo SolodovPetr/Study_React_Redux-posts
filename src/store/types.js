@@ -6,3 +6,4 @@ export const CLEAR_POST = 'clear_post';
 // Users
 export const ADD_NEWSLETTER = 'add_newsletter';
 export const CLEAR_NEWSLETTER = 'clear_newsletter';
+export const SEND_MESSAGE = 'send_message';

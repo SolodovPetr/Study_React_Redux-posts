@@ -2,9 +2,13 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Alert } from 'react-bootstrap';
-
+import { useDispatch } from 'react-redux';
+import { sendMessage } from '../../store/actions';
+import { showToast } from '../utils/tools';
 
 const Contact = () => {
+
+    const dispatch = useDispatch();
 
     const formik = useFormik({
         initialValues: {
@@ -27,7 +31,18 @@ const Contact = () => {
                 .required('Message is required.')
                 .max(500,'Sorry the message is too long')
         }),
-        onSubmit: ( values, {resetForm} ) => console.log(values)
+        onSubmit: ( values, {resetForm} ) => {
+            console.log(values)
+            dispatch( sendMessage(values) )
+                .then( ({ payload }) => {
+                    if ( payload ) {
+                        showToast('success', 'Thank you!')
+                    } else {
+                        showToast('error', 'Sorry, something went wrong.')
+                    }
+                    resetForm();
+                })
+        }
     });
 
     const { errors, touched, handleSubmit } = formik;

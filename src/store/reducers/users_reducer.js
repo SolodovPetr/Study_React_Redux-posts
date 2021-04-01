@@ -1,6 +1,7 @@
 import {
     ADD_NEWSLETTER,
-    CLEAR_NEWSLETTER
+    CLEAR_NEWSLETTER,
+    SEND_MESSAGE
 } from '../types';
 
 export default function usersReducer(state = {}, action) {
@@ -15,6 +16,12 @@ export default function usersReducer(state = {}, action) {
             return {
                 ...state,
                 newsletter: null
+            }
+
+        case SEND_MESSAGE:
+            return {
+                ...state,
+                contact: action.payload
             }
 
         default:
