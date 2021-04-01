@@ -27,6 +27,13 @@ const Header  = () => {
                         </NavLink>
                     </LinkContainer>
                 </NavItem>
+                <NavItem>
+                    <LinkContainer to="/reducer">
+                        <NavLink>
+                            Reducer
+                        </NavLink>
+                    </LinkContainer>
+                </NavItem>
             </Nav>
         </>
     );
